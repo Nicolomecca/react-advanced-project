@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import WeatherCard from "./WeatherCard";
-import { Container, Row, Col, Form } from "react-bootstrap";
+import { Container, Row, Col, Spinner } from "react-bootstrap";
+import CitySearch from "./CitySearch"; 
 
 const HomePage = () => {
   const [weatherData, setWeatherData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [err, setErr] = useState(null);
-  const [searchQuery, setSearchQuery] = useState(""); 
 
   const cities = [
     "London",
@@ -41,13 +41,22 @@ const HomePage = () => {
       });
   };
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (err) {
-    return <div>Error: {err.message}</div>;
-  }
+  const handleCitySearch = (city) => {
+    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=7f07777075088034e8a506a8aac02915`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('City not found');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setWeatherData([data]);
+      })
+      .catch((error) => {
+        console.error('Error fetching weather data:', error);
+        setErr(error);
+      });
+  };
 
   return (
     <Container>
@@ -55,28 +64,46 @@ const HomePage = () => {
         <Col md={12}>
           <Row className="justify-content-center mt-5">
             <Col xs={12} md={4} className="text-center">
-              <Form.Group>
-                <Form.Control
-                  type="search"
-                  placeholder="Cerca una città"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
-              </Form.Group>
+              <CitySearch onSearch={handleCitySearch} />
             </Col>
           </Row>
-          <Row>
-            {weatherData.map((data, index) => (
-              <Col xs={12} md={3} key={index}> 
+
+        
+          {isLoading && (
+            <Container className="text-center mt-5">
+              <Spinner animation="border" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </Spinner>
+            </Container>
+          )}
+
+          {err && <div>Error: {err.message}</div>}
+
+          {weatherData.length === 1 ? (
+            <Row className="justify-content-center">
+              <Col xs={12} md={4} className="d-flex justify-content-center mt-3">
                 <WeatherCard
-                  city={data.name}
-                  temperature={data.main.temp}
-                  condition={data.weather[0].description}
-                  icon={`http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`}
+                  city={weatherData[0].name}
+                  temperature={weatherData[0].main.temp}
+                  condition={weatherData[0].weather[0].description}
+                  icon={`http://openweathermap.org/img/wn/${weatherData[0].weather[0].icon}@2x.png`}
                 />
               </Col>
-            ))}
-          </Row>
+            </Row>
+          ) : (
+            <Row>
+              {weatherData.map((data, index) => (
+                <Col xs={12} md={3} key={index}>
+                  <WeatherCard
+                    city={data.name}
+                    temperature={data.main.temp}
+                    condition={data.weather[0].description}
+                    icon={`http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`}
+                  />
+                </Col>
+              ))}
+            </Row>
+          )}
         </Col>
       </Row>
     </Container>

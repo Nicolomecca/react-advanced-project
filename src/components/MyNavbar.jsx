@@ -1,23 +1,34 @@
 import { Navbar, Nav, Container } from 'react-bootstrap';
+import { Link, useLocation } from 'react-router-dom';
 
-const MyNavbar = () => (
-  <Navbar collapseOnSelect expand="lg" style={{ backgroundColor: '#2569B2' }}>
-    <Container fluid>
-      <Navbar.Brand className='text-white'href="#home">Meteo</Navbar.Brand>
-      <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-      <Navbar.Collapse id="responsive-navbar-nav">
-        <Nav className="me-auto">
-          <Nav.Link  className='text-white' href="#features">About</Nav.Link>
-        </Nav>
-        <Nav>
-          <Nav.Link  className='text-white' href="#deets">More deets</Nav.Link>
-          <Nav.Link  className='text-white' eventKey={2} href="#memes">
-            Dank memes
-          </Nav.Link>
-        </Nav>
-      </Navbar.Collapse>
-    </Container>
-  </Navbar>
-);
+const MyNavbar = () => {
+  const location = useLocation(); 
+
+  return (
+    <Navbar collapseOnSelect expand="lg" style={{ backgroundColor: '#2569B2' }}>
+      <Container fluid>
+        <Link to="/" style={{ textDecoration: 'none' }}>
+          <Navbar.Brand className='text-white'>Meteo</Navbar.Brand>
+        </Link>
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse id="responsive-navbar-nav">
+          <Nav className="me-auto">
+            <Link to="/about" style={{ textDecoration: 'none' }}>
+              <Nav.Link className={`text-white ${location.pathname === '/about' ? 'active' : ''}`}>
+                About
+              </Nav.Link>
+            </Link>
+          </Nav>
+          <Nav>
+            <Nav.Link className='text-white' href="#deets">More deets</Nav.Link>
+            <Nav.Link className='text-white' eventKey={2} href="#memes">
+              Dank memes
+            </Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
+  );
+};
 
 export default MyNavbar;
