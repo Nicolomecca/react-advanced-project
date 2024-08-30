@@ -1,11 +1,12 @@
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 
+
 const MyFooter = () => {
   const currentYear = new Date().getFullYear(); // Sposta questa riga all'interno del componente
 
   return (
-    <footer className=" text-white mt-5 p-4 text-center" style={{ backgroundColor: '#024345' }}>
+    <footer className=" text-white mt-5 p-4 text-center" style={{ backgroundColor: '#2569B2' }}>
       <Container>
         <Row>
           <Col md="4">

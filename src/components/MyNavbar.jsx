@@ -1,7 +1,7 @@
 import { Navbar, Nav, Container } from 'react-bootstrap';
 
 const MyNavbar = () => (
-  <Navbar collapseOnSelect expand="lg" style={{ backgroundColor: '#024345' }}>
+  <Navbar collapseOnSelect expand="lg" style={{ backgroundColor: '#2569B2' }}>
     <Container fluid>
       <Navbar.Brand className='text-white'href="#home">Meteo</Navbar.Brand>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
