@@ -79,3 +79,13 @@
 .weather-info {
   text-align: left;
 }
+
+.hero {
+  background-image: url("C:\Users\nico9\OneDrive\Desktop\react-advanced-project\public\meteo.jpg"); 
+  background-size: cover;
+  background-position: center;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

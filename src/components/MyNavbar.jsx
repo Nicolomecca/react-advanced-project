@@ -7,17 +7,19 @@ const MyNavbar = () => {
   return (
     <Navbar collapseOnSelect expand="lg" style={{ backgroundColor: '#2569B2' }}>
       <Container fluid>
-        <Link to="/" style={{ textDecoration: 'none' }}>
+        <Link to="/" className="nav-link"style={{ textDecoration: 'none' }}>
           <Navbar.Brand className='text-white'>Meteo</Navbar.Brand>
         </Link>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-            <Link to="/about" style={{ textDecoration: 'none' }}>
-              <Nav.Link className={`text-white ${location.pathname === '/about' ? 'active' : ''}`}>
-                About
-              </Nav.Link>
-            </Link>
+            <Nav.Link 
+              as={Link} 
+              to="/about" 
+              className={`text-white ${location.pathname === '/about' ? 'active' : ''}`}
+            >
+              About
+            </Nav.Link>
           </Nav>
           <Nav>
             <Nav.Link className='text-white' href="#deets">More deets</Nav.Link>
@@ -32,3 +34,4 @@ const MyNavbar = () => {
 };
 
 export default MyNavbar;
+

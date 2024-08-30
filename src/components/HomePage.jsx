@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import WeatherCard from "./WeatherCard";
-import { Container, Row, Col, Spinner } from "react-bootstrap";
+import { Container, Row, Col, Spinner, Button } from "react-bootstrap";
 import CitySearch from "./CitySearch"; 
 
 const HomePage = () => {
@@ -20,7 +20,7 @@ const HomePage = () => {
   ];
 
   useEffect(() => {
-    fetchWeather();
+    fetchWeather(); 
   }, []);
 
   const fetchWeather = () => {
@@ -42,6 +42,7 @@ const HomePage = () => {
   };
 
   const handleCitySearch = (city) => {
+    setIsLoading(true); 
     fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=7f07777075088034e8a506a8aac02915`)
       .then((response) => {
         if (!response.ok) {
@@ -50,11 +51,13 @@ const HomePage = () => {
         return response.json();
       })
       .then((data) => {
-        setWeatherData([data]);
+        setWeatherData([data]); 
+        setIsLoading(false); 
       })
       .catch((error) => {
         console.error('Error fetching weather data:', error);
         setErr(error);
+        setIsLoading(false); 
       });
   };
 
@@ -68,7 +71,6 @@ const HomePage = () => {
             </Col>
           </Row>
 
-        
           {isLoading && (
             <Container className="text-center mt-5">
               <Spinner animation="border" role="status">
@@ -102,6 +104,16 @@ const HomePage = () => {
                   />
                 </Col>
               ))}
+            </Row>
+          )}
+
+          {weatherData.length === 1 && (
+            <Row className="justify-content-center mt-4">
+              <Col xs={12} md={4} className="text-center">
+                <Button variant="primary" onClick={fetchWeather}>
+                  Mostra tutte le città
+                </Button>
+              </Col>
             </Row>
           )}
         </Col>

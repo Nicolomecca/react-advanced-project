@@ -15,10 +15,14 @@ function App() {
           <MyNavbar />
         </header>
         <main className="flex-grow-1">
-          <h1 className="text-center mt-4">Welcome to the Weather App</h1>
-          <p className="text-center">Here you can find weather forecasts.</p>
+          <div  className="hero " >
+            <div className="text-center text-white">
+              <h1 className="mb-3">Welcome to the Weather App</h1>
+              <p className="lead">Here you can find weather forecasts.</p>
+            </div>
+          </div>
           <Routes>
-            <Route path="/" element={<HomePage />} />
+            <Route path="" element={<HomePage />} />
             <Route path="/about" element={<About />} />
             <Route path="*" element={<NotFoundPage />} /> 
           </Routes>
