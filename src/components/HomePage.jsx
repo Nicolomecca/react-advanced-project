@@ -25,7 +25,7 @@ const HomePage = () => {
 
   const fetchWeather = () => {
     const fetchPromises = cities.map((city) => {
-      return fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=7f07777075088034e8a506a8aac02915`) 
+      return fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=7f07777075088034e8a506a8aac02915&units=metric`) 
         .then((response) => response.json());
     });
 
@@ -43,7 +43,7 @@ const HomePage = () => {
 
   const handleCitySearch = (city) => {
     setIsLoading(true); 
-    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=7f07777075088034e8a506a8aac02915`)
+    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=7f07777075088034e8a506a8aac02915&units=metric`)
       .then((response) => {
         if (!response.ok) {
           throw new Error('City not found');
@@ -83,7 +83,7 @@ const HomePage = () => {
 
           {weatherData.length === 1 ? (
             <Row className="justify-content-center">
-              <Col xs={12} md={4} className="d-flex justify-content-center mt-3">
+              <Col xs={12} md={6} lg={4} className="d-flex justify-content-center mt-3">
                 <WeatherCard
                   city={weatherData[0].name}
                   temperature={weatherData[0].main.temp}
@@ -93,9 +93,9 @@ const HomePage = () => {
               </Col>
             </Row>
           ) : (
-            <Row>
+            <Row className='g-3'>
               {weatherData.map((data, index) => (
-                <Col xs={12} md={3} key={index}>
+                <Col xs={12} sm={6}  md={4} lg={3} key={index}>
                   <WeatherCard
                     city={data.name}
                     temperature={data.main.temp}
@@ -110,7 +110,7 @@ const HomePage = () => {
           {weatherData.length === 1 && (
             <Row className="justify-content-center mt-4">
               <Col xs={12} md={4} className="text-center">
-                <Button variant="primary" onClick={fetchWeather}>
+                <Button variant="success" onClick={fetchWeather}>
                   Mostra tutte le città
                 </Button>
               </Col>

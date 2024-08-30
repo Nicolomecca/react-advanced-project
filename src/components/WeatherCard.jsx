@@ -1,4 +1,3 @@
-import React from 'react';
 
 const WeatherCard = ({ city, temperature, condition, icon, isSearchResult }) => {
   return (
@@ -9,7 +8,7 @@ const WeatherCard = ({ city, temperature, condition, icon, isSearchResult }) => 
       <div className="weather-card-body">
         <img src={icon} alt={condition} className="weather-icon" />
         <div className="weather-info">
-          <h3>{temperature}°C</h3>
+          <h3>{Math.round(temperature)}°C</h3> 
           <p>{condition}</p>
         </div>
       </div>
