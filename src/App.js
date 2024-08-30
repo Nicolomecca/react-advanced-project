@@ -1,24 +1,23 @@
-import logo from './logo.svg';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css'
+import MyNavbar from './components/MyNavbar';
+import MyFooter from './components/MyFooter';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="d-flex flex-column min-vh-100">
+    <header>
+   <MyNavbar/>
+    </header>
+    <main className="flex-grow-1">
+     <h1 className="text-center mt-4">Welcome to the Weather App</h1>
+      <p className="text-center">Here you can find weather forecasts.</p>
+    </main>
+    <footer>
+      <MyFooter/>
+    </footer>
     </div>
+
   );
 }
 
