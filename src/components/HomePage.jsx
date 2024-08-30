@@ -20,6 +20,7 @@ const HomePage = () => {
   ];
 
   useEffect(() => {
+    console.log("Recupero dati meteo per città predefinite...");
     fetchWeather(); 
   }, []);
 
@@ -31,11 +32,12 @@ const HomePage = () => {
 
     Promise.all(fetchPromises)
       .then((results) => {
+        console.log("Dati meteo recuperati con successo:", results);
         setWeatherData(results);
         setIsLoading(false);
       })
       .catch((error) => {
-        console.error('Error fetching weather data:', error);
+        console.error('Errore nel recupero dei dati meteo:', error);
         setErr(error);
         setIsLoading(false);
       });
@@ -46,16 +48,17 @@ const HomePage = () => {
     fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=7f07777075088034e8a506a8aac02915&units=metric`)
       .then((response) => {
         if (!response.ok) {
-          throw new Error('City not found');
+          throw new Error('Città non trovata');
         }
         return response.json();
       })
       .then((data) => {
+        console.log("Dati meteo per città cercata:", data);
         setWeatherData([data]); 
         setIsLoading(false); 
       })
       .catch((error) => {
-        console.error('Error fetching weather data:', error);
+        console.error('Errore nel recupero dei dati meteo:', error);
         setErr(error);
         setIsLoading(false); 
       });
@@ -74,12 +77,12 @@ const HomePage = () => {
           {isLoading && (
             <Container className="text-center mt-5">
               <Spinner animation="border" role="status">
-                <span className="visually-hidden">Loading...</span>
+                <span className="visually-hidden">Caricamento...</span>
               </Spinner>
             </Container>
           )}
 
-          {err && <div>Error: {err.message}</div>}
+          {err && <div>Errore: {err.message}</div>}
 
           {weatherData.length === 1 ? (
             <Row className="justify-content-center">
@@ -95,7 +98,7 @@ const HomePage = () => {
           ) : (
             <Row className='g-3'>
               {weatherData.map((data, index) => (
-                <Col xs={12} sm={6}  md={4} lg={3} key={index}>
+                <Col xs={12} sm={6} md={4} lg={3} key={index}>
                   <WeatherCard
                     city={data.name}
                     temperature={data.main.temp}
